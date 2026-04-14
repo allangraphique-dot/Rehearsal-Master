@@ -34,6 +34,22 @@ export default function App() {
 
   const togglePlay = () => setIsPlaying(!isPlaying);
 
+  const getSectionStartTime = (index: number) => {
+    const section = selectedSong.sections[index];
+    if (section?.startTime) return section.startTime;
+
+    let totalBars = 0;
+    for (let i = 0; i < index; i++) {
+      totalBars += selectedSong.sections[i].bars;
+    }
+    const [beatsPerBar] = selectedSong.timeSignature.split('/').map(Number);
+    const totalSeconds = (totalBars * beatsPerBar * 60) / selectedSong.bpm;
+    
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = Math.floor(totalSeconds % 60);
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
   return (
     <div className="min-h-screen bg-elegant-bg text-elegant-text font-sans selection:bg-elegant-accent/30 flex flex-col">
       {/* Top Header */}
@@ -88,7 +104,7 @@ export default function App() {
                   )}
                 >
                   <span className="float-right font-mono text-[12px] text-elegant-muted">
-                    {index === 0 ? '00:00' : `0${index}:15`}
+                    {getSectionStartTime(index)}
                   </span>
                   <div className="font-bold text-sm text-white">{section.name}</div>
                   <div className="text-[11px] text-[#666] mt-1">{section.bars} Compassos</div>
@@ -120,7 +136,7 @@ export default function App() {
         <section className="overflow-y-auto p-10 flex flex-col gap-8">
           <div className="flex items-center justify-between">
             <h3 className="text-[11px] font-bold uppercase tracking-[2px] text-[#555] border-b border-elegant-border pb-2 flex-1 mr-4">
-              Mapa de Visualização Geral
+              Mapa de Ensaio Detalhado
             </h3>
             <button 
               onClick={togglePlay}
@@ -130,51 +146,51 @@ export default function App() {
             </button>
           </div>
 
-          {/* Timeline Container */}
-          <div className="h-[120px] bg-elegant-surface rounded-lg border border-elegant-border flex items-center p-5 gap-1">
-            {selectedSong.sections.map((section, index) => (
-              <div 
-                key={section.id}
-                className={cn(
-                  "h-10 flex items-center justify-center text-[10px] font-bold uppercase text-[#111] transition-all",
-                  index === currentSectionIndex && isPlaying ? "ring-2 ring-white ring-inset" : ""
-                )}
-                style={{ 
-                  width: `${(section.bars / selectedSong.sections.reduce((acc, s) => acc + s.bars, 0)) * 100}%`,
-                  backgroundColor: index % 2 === 0 ? '#D4AF37' : '#FFFFFF',
-                  opacity: index % 2 === 0 ? 1 : 0.8
-                }}
-              >
-                {section.name.substring(0, 5)}
-              </div>
-            ))}
-          </div>
-
           {/* Details Card */}
-          <div className="bg-elegant-surface border border-elegant-border rounded-lg p-6 flex-1">
-            <h3 className="text-[11px] font-bold uppercase tracking-[2px] text-[#555] border-b border-elegant-border pb-2 mb-6">
-              Marcações de Ensaio: {currentSection?.name}
+          <div className="bg-elegant-surface border border-elegant-border rounded-lg p-8 flex-1">
+            <h3 className="text-[11px] font-bold uppercase tracking-[2px] text-elegant-accent border-b border-elegant-border pb-3 mb-8 flex items-center justify-between">
+              <span>Seção Atual: {currentSection?.name}</span>
+              <div className="flex gap-4 items-center">
+                <span className="font-mono text-[10px] text-elegant-muted">Início: {getSectionStartTime(currentSectionIndex)}</span>
+                <span className="font-mono text-[10px] text-white/20">|</span>
+                <span className="font-mono text-[10px] text-elegant-muted">{currentSection?.bars} Compassos</span>
+              </div>
             </h3>
             
-            <div className="space-y-0">
+            <div className="space-y-6">
               {currentSection?.notes ? (
-                <div className="grid grid-cols-[80px_1fr] py-3 border-b border-elegant-active">
-                  <div className="font-mono text-elegant-accent">Bar 01</div>
-                  <div className="text-sm text-[#BBB] whitespace-pre-wrap">{currentSection.notes}</div>
-                </div>
+                currentSection.notes.split('\n').map((line, i) => {
+                  const tagMatch = line.match(/^\[(LYRIC|INSTR|GROOVE|DYN)\]\s*(.*)/);
+                  if (tagMatch) {
+                    const [, tag, content] = tagMatch;
+                    const tagColors: Record<string, string> = {
+                      LYRIC: 'text-white/40',
+                      INSTR: 'text-elegant-accent',
+                      GROOVE: 'text-blue-400',
+                      DYN: 'text-red-400'
+                    };
+                    
+                    return (
+                      <div key={i} className="flex flex-col gap-1 border-l-2 border-elegant-border pl-4 py-1">
+                        <span className={cn("text-[9px] font-black uppercase tracking-[2px]", tagColors[tag])}>
+                          {tag}
+                        </span>
+                        <p className={cn(
+                          "leading-relaxed",
+                          tag === 'LYRIC' ? "text-xl text-white font-medium italic" : "text-sm text-[#BBB]"
+                        )}>
+                          {content}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return <p key={i} className="text-sm text-[#BBB]">{line}</p>;
+                })
               ) : (
-                <div className="text-center py-10 text-elegant-muted italic text-sm">
+                <div className="text-center py-20 text-elegant-muted italic text-sm">
                   Nenhuma marcação específica para esta seção.
                 </div>
               )}
-              <div className="grid grid-cols-[80px_1fr] py-3 border-b border-elegant-active">
-                <div className="font-mono text-elegant-accent">Bar 05</div>
-                <div className="text-sm text-[#BBB]">Entrada da Bateria (Kick/Snare pattern seco)</div>
-              </div>
-              <div className="grid grid-cols-[80px_1fr] py-3 border-b border-elegant-active">
-                <div className="font-mono text-elegant-accent">Bar 09</div>
-                <div className="text-sm text-[#BBB]">Baixo dobra a tônica com distorção leve</div>
-              </div>
             </div>
           </div>
         </section>

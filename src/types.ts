@@ -4,6 +4,7 @@ export interface SongSection {
   bars: number;
   notes?: string;
   color?: string;
+  startTime?: string;
 }
 
 export interface Song {
