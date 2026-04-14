@@ -98,5 +98,25 @@ export const initialSongs: Song[] = [
       { id: 'y12', name: 'Section B4 (Chorus 4)', bars: 8, startTime: '03:12', notes: '[CHORDS] F# | E | A | B\n[LYRIC] I\'m here to remind you / Of the mess you left when you went away / It\'s not fair to deny me / Of the cross I bear that you gave to me / You, you, you oughta know\n[DYN] Forte.', color: 'bg-red-900/40' },
       { id: 'y13', name: 'Outro (Vamp)', bars: 28, startTime: '03:30', notes: '[CHORDS] F# | E | A | B\n[LYRIC] You, you, you oughta know... (Vocal ad-libs)\n[INSTR] Bass groove continues. Guitars feedback/noise.\n[DYN] Fade out.', color: 'bg-zinc-800' },
     ]
+  },
+  {
+    id: 'numb-linkin-park',
+    title: 'Numb',
+    artist: 'Linkin Park',
+    album: 'Meteora',
+    bpm: 110,
+    timeSignature: '4/4',
+    sections: [
+      { id: 'n1', name: 'Intro', bars: 4, startTime: '00:00', notes: '[CHORDS] G5 | Eb5 | Bb5 | F5\n[INSTR] Signature synth melody.\n[DYN] Mezzo-forte.', color: 'bg-zinc-800' },
+      { id: 'n2', name: 'Verse 1', bars: 8, startTime: '00:08', notes: '[CHORDS] Gm | Eb | Bb | F\n[LYRIC] I\'m tired of being what you want me to be / Feeling so faithless, lost under the surface\n[DYN] Mezzo-piano.', color: 'bg-blue-900/40' },
+      { id: 'n3', name: 'Pre-Chorus 1', bars: 8, startTime: '00:26', notes: '[CHORDS] F | Gm | Bb | Eb | F\n[LYRIC] (Caught in the undertow, just caught in the undertow) / Every step that I take is another mistake to you\n[DYN] Mezzo-forte building.', color: 'bg-amber-900/40' },
+      { id: 'n4', name: 'Chorus 1', bars: 8, startTime: '00:43', notes: '[CHORDS] G5 | Eb5 | Bb5 | F5\n[LYRIC] I\'ve become so numb, I can\'t feel you there / I\'ve become so tired, so much more aware\n[DYN] Forte.', color: 'bg-red-900/40' },
+      { id: 'n5', name: 'Verse 2', bars: 8, startTime: '01:01', notes: '[CHORDS] Gm | Eb | Bb | F\n[LYRIC] Can\'t you see that you\'re smothering me? / Holding too tightly, afraid to lose control\n[DYN] Mezzo-piano.', color: 'bg-blue-900/40' },
+      { id: 'n6', name: 'Pre-Chorus 2', bars: 8, startTime: '01:18', notes: '[CHORDS] F | Gm | Bb | Eb | F | Gm\n[LYRIC] (Caught in the undertow, just caught in the undertow) / Every second I waste is more than I can take\n[DYN] Mezzo-forte building.', color: 'bg-amber-900/40' },
+      { id: 'n7', name: 'Chorus 2', bars: 8, startTime: '01:36', notes: '[CHORDS] G5 | Eb5 | Bb5 | F5\n[LYRIC] I\'ve become so numb, I can\'t feel you there / I\'ve become so tired, so much more aware\n[DYN] Forte.', color: 'bg-red-900/40' },
+      { id: 'n8', name: 'Bridge', bars: 8, startTime: '01:53', notes: '[CHORDS] F5 | G5 A5 Bb5 D5 Eb5 | F5 D5\n[LYRIC] And I know I may end up failing too / But I know you were just like me with someone disappointed in you\n[DYN] Fortissimo.', color: 'bg-purple-900/40' },
+      { id: 'n9', name: 'Chorus 3', bars: 16, startTime: '02:11', notes: '[CHORDS] G5 | Eb5 | Bb5 | F5\n[LYRIC] I\'ve become so numb, I can\'t feel you there / (I\'m tired of being what you want me to be)\n[DYN] Forte.', color: 'bg-red-900/40' },
+      { id: 'n10', name: 'Outro', bars: 4, startTime: '02:46', notes: '[CHORDS] G5 | Eb5 | Bb5 | F5\n[INSTR] Synth melody fades out.\n[DYN] Decrescendo.', color: 'bg-zinc-800' },
+    ]
   }
 ];
