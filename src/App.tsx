@@ -160,14 +160,15 @@ export default function App() {
             <div className="space-y-6">
               {currentSection?.notes ? (
                 currentSection.notes.split('\n').map((line, i) => {
-                  const tagMatch = line.match(/^\[(LYRIC|INSTR|GROOVE|DYN)\]\s*(.*)/);
+                  const tagMatch = line.match(/^\[(LYRIC|INSTR|GROOVE|DYN|CHORDS)\]\s*(.*)/);
                   if (tagMatch) {
                     const [, tag, content] = tagMatch;
                     const tagColors: Record<string, string> = {
                       LYRIC: 'text-white/40',
                       INSTR: 'text-elegant-accent',
                       GROOVE: 'text-blue-400',
-                      DYN: 'text-red-400'
+                      DYN: 'text-red-400',
+                      CHORDS: 'text-emerald-400'
                     };
                     
                     return (
@@ -177,7 +178,9 @@ export default function App() {
                         </span>
                         <p className={cn(
                           "leading-relaxed",
-                          tag === 'LYRIC' ? "text-xl text-white font-medium italic" : "text-sm text-[#BBB]"
+                          tag === 'LYRIC' ? "text-xl text-white font-medium italic" : 
+                          tag === 'CHORDS' ? "text-2xl font-mono font-bold text-emerald-300 tracking-widest" :
+                          "text-sm text-[#BBB]"
                         )}>
                           {content}
                         </p>
